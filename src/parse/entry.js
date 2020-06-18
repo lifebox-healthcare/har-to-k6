@@ -3,6 +3,7 @@ const request = require('./request')
 const state = require('./state/entry')
 const variables = require('./variables')
 const sleep = require('./sleep')
+const startedDateTime = require('./startedDateTime')
 const { entrySpec: makeEntrySpec } = require('../make')
 
 function entry(node, result) {
@@ -15,6 +16,9 @@ function entry(node, result) {
   }
   if (node.sleep) {
     spec.sleep = sleep(node.sleep)
+  }
+  if (node.startedDateTime) {
+    spec.startedDateTime = startedDateTime(node.startedDateTime)
   }
   request(node.request, spec.request)
   if (node.checks) {

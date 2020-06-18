@@ -1,7 +1,7 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
 import { result as makeResult, requestSpec as makeRequestSpec } from 'make'
-const [entry, { checks, request, variables, sleep }] = isolate(
+const [entry, { checks, request, variables, sleep, startedDateTime }] = isolate(
   test,
   'parse/entry',
   {
@@ -9,6 +9,7 @@ const [entry, { checks, request, variables, sleep }] = isolate(
     request: 'parse/request',
     variables: 'parse/variables',
     sleep: 'parse/sleep',
+    startedDateTime: 'parse/startedDateTime',
   }
 )
 
@@ -55,4 +56,9 @@ test.serial('variables', (t) => {
 test.serial('sleep', (t) => {
   entry({ sleep: 1200 }, makeResult())
   t.true(sleep.calledOnce)
+})
+
+test.serial('startedDateTime', (t) => {
+  entry({ startedDateTime: '2020-06-17T12:35:17.658Z' }, makeResult())
+  t.true(startedDateTime.calledOnce)
 })
